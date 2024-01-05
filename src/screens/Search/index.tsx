@@ -1,17 +1,20 @@
-import { useEffect, useState } from 'react';
-import { ImageBackground, Text, View, ScrollView } from 'react-native';
+import { useEffect, useState } from "react";
+import { ImageBackground, ScrollView, Text, View } from "react-native";
 
-import { styles } from './styles';
+import bg from "@assets/background.png";
 import Logo from "@assets/logo.svg";
-import bg from '@assets/background.png';
+import { styles } from "./styles";
 
-import { useCity } from '@hooks/useCity';
-import { CityProps, getCityByNameService } from '@services/getCityByNameService';
+import { useCity } from "@hooks/useCity";
+import {
+  CityProps,
+  getCityByNameService,
+} from "@services/getCityByNameService";
 
-import { SelectList } from '@components/SelectList';
+import { SelectList } from "@components/SelectList";
 
 export function Search() {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [cities, setCities] = useState<CityProps[]>([]);
 
@@ -38,7 +41,12 @@ export function Search() {
 
   return (
     <ScrollView>
-      <ImageBackground source={bg} defaultSource={bg} style={styles.container} resizeMode="cover">
+      <ImageBackground
+        source={bg}
+        defaultSource={bg}
+        style={styles.container}
+        resizeMode="cover"
+      >
         <Logo width={186} height={32} />
 
         <View style={styles.content}>

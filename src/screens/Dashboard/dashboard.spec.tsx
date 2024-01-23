@@ -1,5 +1,5 @@
-import { mockCityAPIResponse } from "@__tests__/mocks/api/mockCityAPIResponse";
-import { mockWeatherAPIResponse } from "@__tests__/mocks/api/mockWeatherAPIResponse";
+import { mockCityAPIResponse } from "@__tests__/mocks/api/mockCityAPIResponse"
+import { mockWeatherAPIResponse } from "@__tests__/mocks/api/mockWeatherAPIResponse"
 import {
   act,
   fireEvent,
@@ -7,10 +7,10 @@ import {
   screen,
   waitFor,
   waitForElementToBeRemoved,
-} from "@__tests__/utils/customRender";
-import { saveStorageCity } from "@libs/asyncStorage/cityStorage";
-import { Dashboard } from "@screens/Dashboard";
-import { api } from "@services/api";
+} from "@__tests__/utils/customRender"
+import { saveStorageCity } from "@libs/asyncStorage/cityStorage"
+import { Dashboard } from "@screens/Dashboard"
+import { api } from "@services/api"
 
 describe("Screen: Dashboard", () => {
   beforeAll(async () => {
@@ -19,43 +19,43 @@ describe("Screen: Dashboard", () => {
       name: "Curitiba, BR",
       latitude: 123,
       longitude: 321,
-    };
+    }
 
-    await saveStorageCity(city);
+    await saveStorageCity(city)
 
     jest
       .spyOn(api, "get")
       .mockResolvedValueOnce({ data: mockWeatherAPIResponse })
       .mockResolvedValueOnce({ data: mockCityAPIResponse })
-      .mockRejectedValueOnce({ data: mockWeatherAPIResponse });
-  });
+      .mockRejectedValueOnce({ data: mockWeatherAPIResponse })
+  })
   it("should display the selected city weather", async () => {
-    render(<Dashboard />);
+    render(<Dashboard />)
 
-    const cityName = await waitFor(() => screen.findByText(/curitiba/i));
-    expect(cityName).toBeTruthy();
-  });
+    const cityName = await waitFor(() => screen.findByText(/curitiba/i))
+    expect(cityName).toBeTruthy()
+  })
 
   it("should show weather when change selected city", async () => {
-    render(<Dashboard />);
+    render(<Dashboard />)
 
-    await waitForElementToBeRemoved(() => screen.queryByTestId("loading"));
+    await waitForElementToBeRemoved(() => screen.queryByTestId("loading"))
 
-    const cityName = "São Paulo";
-
-    await waitFor(() =>
-      act(() => {
-        const search = screen.getByTestId("search-input");
-        fireEvent.changeText(search, cityName);
-      }),
-    );
+    const cityName = "São Paulo"
 
     await waitFor(() =>
       act(() => {
-        fireEvent.press(screen.getByText(cityName, { exact: false }));
-      }),
-    );
+        const search = screen.getByTestId("search-input")
+        fireEvent.changeText(search, cityName)
+      })
+    )
 
-    expect(screen.getByText(cityName, { exact: false })).toBeTruthy();
-  });
-});
+    await waitFor(() =>
+      act(() => {
+        fireEvent.press(screen.getByText(cityName, { exact: false }))
+      })
+    )
+
+    expect(screen.getByText(cityName, { exact: false })).toBeTruthy()
+  })
+})
